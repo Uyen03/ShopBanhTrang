@@ -1,0 +1,147 @@
+﻿
+
+@{
+    ViewData["Title"] = "Home Page";
+    int numOfQuantity = 1;
+}
+
+@model IEnumerable<WebBanhTrang.Models.Product>
+
+<form asp-controller="Home" asp-action="Index" method="get">
+
+    <br />
+
+    <div class="input-group">
+        @* <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+        <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button> *@
+        
+        @* <form asp-action="Index" method="get" class="form-inline">
+            <input type="text" name="name" /> Giá từ<input type="number" name="to" />đến<input type="text" name="from" /><button>Tìm</button>
+        </form> *@
+
+        <form asp-action="Index" method="get" class="form-inline">
+            <input type="text" name="name" placeholder="Tên sản phẩm" class="form-control mr-sm-2" style="width: 70px;" />
+            <input type="number" name="minPrice" placeholder="Giá từ" class="form-control mr-sm-2" style="width: 50px;" />
+            <input type="number" name="maxPrice" placeholder="Giá đến" class="form-control mr-sm-2" style="width: 50px;" />
+            <button type="submit">Tìm</button>
+        </form>
+        <form asp-action="FilterByCategory" method="get" class="form-inline">
+            <div class="input-group">
+                <select class="form-control" name="categoryId">
+                    <option value="">Chọn Category</option>
+                    @if (ViewBag.Categories != null)
+                    {
+                    foreach (var category in ViewBag.Categories)
+                    {
+                    <option value="@category.Id">@category.Name</option>
+                    }
+                    }
+                    else
+                    {
+                    <option value="">No categories available</option>
+                    }
+                </select>
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">
+                        Lọc
+                    </button>
+                </div>
+            </div>
+        </form>
+        
+    </div>
+    <header>
+       
+        <style>
+            .carousel-item img {
+                max-width: 100%;
+                height: auto;
+                max-height: 500px; /* Adjust the maximum height as needed */
+                width: auto; /* Ensure images maintain aspect ratio */
+                margin: auto ; /* Center the images horizontally */
+               
+            }
+        </style>
+
+        <div class="container">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-interval="2000" data-bs-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
+                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
+                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="~/images/combo 3 vị.jpg" class="d-block w-20" alt="Slide 1">
+
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/images/tóp mỡ da giòn.jpg" class="d-block w-20" alt="Slide 2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/images/Sate.jpg" class="d-block w-20" alt="Slide 3">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </a>
+            </div>
+        </div>
+       
+
+</form>
+    </header>
+    
+
+@if (Model.Any())
+{
+    <h2>Bánh tráng</h2>
+    <hr />
+    <section class="py-2">
+        <div class="container px-4 px-lg-5 mt-3">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify content-center">
+                @foreach (var item in Model)
+                {
+                    <div class="col mb-5">
+                        <div class="card gap-3" style="width: 18rem">
+                            <img src="@item.ImageUrl" class="card-img-top" alt="..."
+                                 style="height: 300px">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    @Html.DisplayFor(modelItem => @item.Name)
+                                </h5>
+                                <div class="d-flex">
+                                    <span>Price: </span>
+                                    <p class="mx-3">@item.Price.ToString("#,##0") Vnđ</p>
+                                </div>
+                                <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productID="@item.Id" asp-route-quantity="@numOfQuantity">
+                                    <button class="btn btn-outline-dark"><i class="bi-cart-fill me-1"></i> Add to Cart</button>
+                                    <a asp-action="Display" asp-controller="Product" class="btn btn-warning" asp-route-id="@item.Id">Chi tiết</a>
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+
+
+}
+else
+{
+    <p>KHÔNG CÓ SẢN PHẨM BẠN MUỐN TÌM!</p>
+}
+
+
+@section Scripts {
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-eAHzgDZzU7O6ek8zzcogGeVVt4O+V/z8Ck1CnHyB08j3an4gVRt7FqDfGCQNJi0h" crossorigin="anonymous"></script>
+   
+}

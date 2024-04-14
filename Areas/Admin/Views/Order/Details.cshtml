@@ -1,0 +1,26 @@
+﻿@model WebBanhTrang.Models.Order
+
+@{
+    ViewData["Title"] = "Chi Tiết";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div>
+    <h1>Chi tiết sản phẩm</h1>
+    <h2>đơn hàng @Model.Id</h2>
+
+    <div>
+        <p><b>Ngày đặt hàng:</b> @Model.OrderDate</p>
+        <p><b>Địa chỉ giao hàng:</b> @Model.ShippingAddress</p>
+        <p><b>Tổng tiền:</b>@Model.TotalPrice</p>
+        <p><b>Ghi chú:</b> @Model.Notes</p>
+        @*  <p>Tên khách hàng:@Model.ApplicationUser</p> *@
+
+        <hr />
+
+    </div>
+<div>
+   
+    <a asp-action="Index">Back to List</a>
+</div>

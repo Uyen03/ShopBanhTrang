@@ -1,0 +1,28 @@
+﻿@model Order
+
+
+
+<h2>Đặt hàng thành công</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderDetails)
+        {
+            <tr>
+                <td>@(item.Product != null ? item.Product.Name : "Unknown")</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price.ToString("C")</td>
+                <td>@(item.Quantity * item.Price)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Form và các trường khác cho việc thanh toán -->

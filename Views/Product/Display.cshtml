@@ -1,0 +1,18 @@
+﻿@model WebBanhTrang.Models.Product
+
+<h1>Chi tiết sản phẩm</h1>
+<h2>@Model.Name</h2>
+<hr />
+<div>
+
+    <p>Giá: @Model.Price</p>
+    <p>Mô tả: @Model.Description</p>
+    <p>Ảnh mô tả: </p>
+    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
+        <img src="@Model.ImageUrl" alt="Product Image" style="max-width: 200px;" />
+    }
+    <p>Loại: @Model.Category.Name</p>
+</div>
+
+<a asp-action="Index" class="btn btn-dark">Back to List</a>
